@@ -74,8 +74,8 @@ function limit(string = '', limit = 0) {
 }
 
 function scoreTings(type) {
-	// const url = 'https://flappy-bird-highscore.herokuapp.com';
-	const url = 'http://localhost:3000';
+	const url = 'https://flappy-bird-highscore.herokuapp.com';
+// 	const url = 'http://localhost:3000';
 	if (type == 'GET') {
 		fetch(url)
 			.then((res) => res.json())

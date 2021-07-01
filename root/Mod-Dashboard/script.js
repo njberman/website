@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const username = prompt('Please enter your username:');
   const password = prompt('Please enter your password:');
 	const url = 'https://flappy-bird-highscore.herokuapp.com';
-// // 	const url = 'http://localhost:3000';
+	// const url = 'http://localhost:3000';
 
   fetch(url + '/login-dashboard', {
     method: 'POST',
@@ -21,26 +21,58 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .catch(console.error);
 
-    const deleteButton1 = document.getElementById('#delete-1');
-    const deleteButton2 = document.getElementById('#delete-2');
-    const deleteButton3 = document.getElementById('#delete-3');
-    // deleteButton1.addEventListener('click', () => {
-        
-    // });
-    
-    fetch(url)
-        .then((res) => res.json())
-        .then((json) => {
-            const tings = [
-                [document.getElementById('score-score-1'), document.getElementById('score-name-1')],
-                [document.getElementById('score-score-2'), document.getElementById('score-name-2')],
-                [document.getElementById('score-score-3'), document.getElementById('score-name-3')]
-            ];
-            
-            json.forEach((score, i) => {
-                tings[i][0].innerText = score.score;
-                tings[i][1].innerText = score.name;
-            });
+    const deleteButtons = ['1', '2', '3'].map((n) => document.getElementById('delete-' + n));
+    deleteButtons.forEach((button, i) => {
+      button.addEventListener('click', () => {
+        const name = button.parentElement.parentElement.children[0].innerText;
+        fetch(url + '/mods/delete-name', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name }),
         })
-        .catch(console.error);
+          .then(() => getLeaderboard())
+          .catch(console.error);
+      });
+    });
+
+    const newUserNameInput = document.getElementById('new-user');
+    const newUserScoreInput = document.getElementById('new-user-score');
+    const addUserButton = document.getElementById('add-new-user');
+
+    addUserButton.addEventListener('click', () => {
+      if (newUserNameInput.value != null && newUserNameInput.value.length >= 3 && newUserNameInput.value.length <= 30) {
+        fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name: newUserNameInput.value, score: newUserScoreInput.value }),
+        })
+          .then(() => getLeaderboard())
+          .catch(console.error);
+      }
+    });
+
+    getLeaderboard();
+    setInterval(getLeaderboard, 2500);
+    
+    function getLeaderboard() {
+      fetch(url)
+          .then((res) => res.json())
+          .then((json) => {
+              const tings = [
+                  [document.getElementById('score-score-1'), document.getElementById('score-name-1')],
+                  [document.getElementById('score-score-2'), document.getElementById('score-name-2')],
+                  [document.getElementById('score-score-3'), document.getElementById('score-name-3')]
+              ];
+
+              json.forEach((score, i) => {
+                  tings[i][0].innerText = score.score;
+                  tings[i][1].innerText = score.name;
+              });
+          })
+          .catch(console.error);
+    }
 });

@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (i === TEXT.length + 1) {
       // clearInterval(textInterval);
       setTimeout(() => {
-        TEXT = 'njbce^brmga^bn';
+        TEXT = 'Gja^bmhe^bs';
         i = 0;
       }, 500);
       return;

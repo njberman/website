@@ -1,0 +1,84 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	background: #00656e;
+}
+
+#main {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	height: 100%;
+	align-items: center;
+	/* background: rgb(63, 63, 63); */
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+	justify-content: center;	
+
+	text-align: center;
+	color: white;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 2rem;
+	flex: 1;
+	width: 100%;
+	margin: 1.1rem;
+}
+
+#score table {
+	text-align: left;
+}
+
+#score h2 {
+	margin: 1.3rem;
+}
+
+#score table, th, td {
+	border: 1px solid white;
+	padding: 1.1rem;
+}
+
+#score table {
+	border-width: 1.5rem;
+	padding: 0;
+	background-color: #1a5a61;
+	box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+#canvasWrapper {
+  display: flex;
+	width: 432px;
+	height: 768px;
+  justify-content: center;
+  align-items: center;
+	margin: 0;
+}
+
+#hidden-dashboard-button {
+	position: fixed;
+	top: 5px;
+	left: 5px;
+	width: 50px;
+	height: 50px;
+	background-color: #00656e;
+	border: none;
+	cursor: auto;
+}
+
+#hidden-dashboard-button:active {
+	background-color: #1a5a61;
+}

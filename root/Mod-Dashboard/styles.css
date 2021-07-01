@@ -1,0 +1,42 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+  width: 100vw;
+	height: 100vh;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	background: #000000;
+}
+
+.dashboard {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 1.3rem;
+  border: 1px solid white;
+}
+
+.dashboard div {
+  background-color: #10ff10;
+
+  padding: 1.25rem;
+  margin: 1.15rem;
+}
+
+#leaderboard table, th, td {
+	border: 1px solid white;
+	padding: 1.1rem;
+}
+
+#leaderboard table {
+	border-width: 1.5rem;
+	padding: 0;
+	background-color: #1a5a61;
+	box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.2);
+}

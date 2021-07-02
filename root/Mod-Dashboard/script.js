@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     deleteButtons.forEach((button, i) => {
       button.addEventListener('click', () => {
         const name = button.parentElement.parentElement.children[0].innerText;
-	const score = parseInt(button.parentElement.parentElement.children[1].innerText, 10);
+	const score = button.parentElement.parentElement.children[1].innerText;
         fetch(url + '/mods/delete-name', {
           method: 'POST',
           headers: {

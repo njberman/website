@@ -25,12 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
     deleteButtons.forEach((button, i) => {
       button.addEventListener('click', () => {
         const name = button.parentElement.parentElement.children[0].innerText;
+	const score = parseInt(button.parentElement.parentElement.children[1].innerText, 10);
         fetch(url + '/mods/delete-name', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ name }),
+          body: JSON.stringify({ name, score }),
         })
           .then(() => getLeaderboard())
           .catch(console.error);

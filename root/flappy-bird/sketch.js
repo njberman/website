@@ -169,6 +169,8 @@ function preload() {
 
 
 function setup() {
+	setInterval(() => scoreTings('GET'), 2500);
+	
     updateLocalStorageScore();
 		scoreTings('GET');
 		// Game basic setup.

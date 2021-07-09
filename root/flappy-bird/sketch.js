@@ -134,7 +134,7 @@ function preload() {
         light => loadImage(`assets/sprites/background-${light}.png`)
     );
 
-    birdsImg = [/*"blue", "red", */"yellow"].map(
+    birdsImg = ["pride"].map(
         color => ["midflap", "upflap", "downflap"].map(
             flap => loadImage(`assets/sprites/${color}bird-${flap}.png`)
         )

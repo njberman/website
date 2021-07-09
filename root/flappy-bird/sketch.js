@@ -130,11 +130,11 @@ function preload() {
     soundOnImg = loadImage("assets/sprites/soundOn.png");
     soundOffImg = loadImage("assets/sprites/soundOff.png");
 
-    bgsImg = ["day", "night"].map(
+    bgsImg = ["day"/*, "night"*/].map(
         light => loadImage(`assets/sprites/background-${light}.png`)
     );
 
-    birdsImg = ["blue", "red", "yellow"].map(
+    birdsImg = [/*"blue", "red", */"yellow"].map(
         color => ["midflap", "upflap", "downflap"].map(
             flap => loadImage(`assets/sprites/${color}bird-${flap}.png`)
         )

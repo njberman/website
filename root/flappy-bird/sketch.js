@@ -214,7 +214,7 @@ function setup() {
     vBase = VDefBase;
 
     /*################# ( bird setup ) ################*/
-    bird = birdsImg[floor(random() * 3)]; //bird color
+    bird = birdsImg[floor(random() * birdsImg.length)]; //bird color
     birdFire = birdsFireImg;
     birdAngle = birdUpAngle;
     stayAngleCount = angleCoolCount;

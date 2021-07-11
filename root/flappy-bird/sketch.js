@@ -187,7 +187,7 @@ function setup() {
     gotScore = [false, false]
 
     /*################# ( environment setup ) ################*/
-    bgImg = bgsImg[floor(random() * 2)];
+    bgImg = bgsImg[floor(random() * bgsImg.length)];
     bgImgScale = width / bgImg.width;
     bgW = bgImg.width * bgImgScale;
     bgH = bgImg.height * bgImgScale;

@@ -216,7 +216,7 @@ function setup() {
 
     /*################# ( bird setup ) ################*/
 	birdIdx++;
-	if (birdIdx == birdsImg.length - 1) birdIdx = 0;
+	if (birdIdx == birdsImg.length) birdIdx = 0;
     bird = birdsImg[birdIdx]; //bird color
 //     bird = birdsImg[floor(random() * birdsImg.length)]; //bird color
     birdFire = birdsFireImg;

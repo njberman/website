@@ -134,7 +134,7 @@ function preload() {
         light => loadImage(`assets/sprites/background-${light}.png`)
     );
 
-    birdsImg = ["yellow"].map(
+    birdsImg = ["US", "england", "pride"].map(
         color => ["midflap", "upflap", "downflap"].map(
             flap => loadImage(`assets/sprites/${color}bird-${flap}.png`)
         )
@@ -166,6 +166,7 @@ function preload() {
     swooshSound = loadSound("assets/audio/swoosh.ogg");
 }
 
+let birdIdx = 0;
 
 
 function setup() {
@@ -214,7 +215,10 @@ function setup() {
     vBase = VDefBase;
 
     /*################# ( bird setup ) ################*/
-    bird = birdsImg[floor(random() * birdsImg.length)]; //bird color
+	birdIdx++;
+	if (birdIdx == birdsImg.length - 1) birdIdx = 0;
+    bird = birdsImg[birdIdx]; //bird color
+//     bird = birdsImg[floor(random() * birdsImg.length)]; //bird color
     birdFire = birdsFireImg;
     birdAngle = birdUpAngle;
     stayAngleCount = angleCoolCount;

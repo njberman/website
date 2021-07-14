@@ -74,7 +74,8 @@ body {
 /* 	right: -5px; */
 /* 	width: 50px; */
 /* 	height: 50px; */
-	background-color: #00656e;
+	color: white;
+	background-color: inherit;
 	border: none;
 	cursor: auto;
 	text-decoration: none;

@@ -173,7 +173,8 @@ function preload() {
     dieSound = loadSound("assets/audio/1-second-of-silence.mp3");
     swooshSound = loadSound("assets/audio/1-second-of-silence.mp3");
     fireSound = loadSound("assets/audio/1-second-of-silence.mp3");
-    loadSound("assets/audio/background.mp3").play();
+    let background = loadSound("assets/audio/background.mp3");
+    background.play();
 }
 
 let birdIdx = 0;

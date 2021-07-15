@@ -14,7 +14,7 @@
           .then((res) => res.json())
           .then((logs) => {
             const logsElem = document.getElementById('logs');
-            logs.forEach((log) => logsElem.innerText += '\n${log}');
+            logs.forEach((log) => logsElem.innerText += `\n${log}`);
           })
           .catch(console.error);
       }, 1000);

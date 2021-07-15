@@ -173,8 +173,7 @@ function preload() {
     dieSound = loadSound("assets/audio/1-second-of-silence.mp3");
     swooshSound = loadSound("assets/audio/1-second-of-silence.mp3");
     fireSound = loadSound("assets/audio/1-second-of-silence.mp3");
-    let background = loadSound("assets/audio/background.mp3");
-    background.play();
+    background = loadSound("assets/audio/background.mp3");
 }
 
 let birdIdx = 0;
@@ -240,6 +239,7 @@ function setup() {
     fireStepCount = fireStep;
     fireSoundCount = 0;
 
+    background.play();
 }
 
 function draw() {

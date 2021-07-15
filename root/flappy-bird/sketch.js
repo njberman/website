@@ -159,12 +159,21 @@ function preload() {
 
 
     /*#################### ( audio ) ##################*/
-    wingSound = loadSound("assets/audio/wing.ogg");
-    scoreSound = loadSound("assets/audio/point.ogg");
-    hitSound = loadSound("assets/audio/hit.ogg");
-    dieSound = loadSound("assets/audio/die.ogg");
-    swooshSound = loadSound("assets/audio/swoosh.ogg");
-    fireSound = loadSound("assets/audio/fire.mp3");
+//     wingSound = loadSound("assets/audio/wing.ogg");
+//     scoreSound = loadSound("assets/audio/point.ogg");
+//     hitSound = loadSound("assets/audio/hit.ogg");
+//     dieSound = loadSound("assets/audio/die.ogg");
+//     swooshSound = loadSound("assets/audio/swoosh.ogg");
+//     fireSound = loadSound("assets/audio/fire.mp3");
+	
+	
+    wingSound = loadSound("assets/audio/1-second-of-silence.mp3");
+    scoreSound = loadSound("assets/audio/1-second-of-silence.mp3");
+    hitSound = loadSound("assets/audio/1-second-of-silence.mp3");
+    dieSound = loadSound("assets/audio/1-second-of-silence.mp3");
+    swooshSound = loadSound("assets/audio/1-second-of-silence.mp3");
+    fireSound = loadSound("assets/audio/1-second-of-silence.mp3");
+    loadSound("assets/audio/background.mp3").play();
 }
 
 let birdIdx = 0;

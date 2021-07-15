@@ -179,7 +179,9 @@ function preload() {
 let birdIdx = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
-	(new Audio('assets/audio/background.mp3')).play();
+	const sound = new Audio('assets/audio/background.mp3');
+	sound.loop = true;
+	sound.play();
 });
 
 

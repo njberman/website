@@ -164,6 +164,7 @@ function preload() {
     hitSound = loadSound("assets/audio/hit.ogg");
     dieSound = loadSound("assets/audio/die.ogg");
     swooshSound = loadSound("assets/audio/swoosh.ogg");
+    fireSound = loadSoung("assets/audio/fire.mp3");
 }
 
 let birdIdx = 0;
@@ -642,6 +643,7 @@ function touch() {
     // circle(fireBorder[0][1],fireBorder[1][0],4);
 
     if (hitFire(top, fireBorder) | hitFire(bottom, fireBorder) | hitFire(birdRUCorner, fireBorder) | hitFire(birdRDCorner, fireBorder)) {
+	    fireSound.play();
         return "fire";
     }
 

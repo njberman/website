@@ -173,10 +173,14 @@ function preload() {
 //     dieSound = loadSound("assets/audio/1-second-of-silence.mp3");
 //     swooshSound = loadSound("assets/audio/1-second-of-silence.mp3");
 //     fireSound = loadSound("assets/audio/1-second-of-silence.mp3");
-    backgroundSound = loadSound("assets/audio/background.mp3");
+//     backgroundSound = loadSound("assets/audio/background.mp3");
 }
 
 let birdIdx = 0;
+
+document.addEventListener('DOMContentLoaded', () => {
+	(new Audio('assets/audio/background.mp3')).play();
+});
 
 
 function setup() {

@@ -159,20 +159,20 @@ function preload() {
 
 
     /*#################### ( audio ) ##################*/
-//     wingSound = loadSound("assets/audio/wing.ogg");
-//     scoreSound = loadSound("assets/audio/point.ogg");
-//     hitSound = loadSound("assets/audio/hit.ogg");
-//     dieSound = loadSound("assets/audio/die.ogg");
-//     swooshSound = loadSound("assets/audio/swoosh.ogg");
-//     fireSound = loadSound("assets/audio/fire.mp3");
+    wingSound = loadSound("assets/audio/wing.ogg");
+    scoreSound = loadSound("assets/audio/point.ogg");
+    hitSound = loadSound("assets/audio/hit.ogg");
+    dieSound = loadSound("assets/audio/die.ogg");
+    swooshSound = loadSound("assets/audio/swoosh.ogg");
+    fireSound = loadSound("assets/audio/fire.mp3");
 	
 	
-    wingSound = loadSound("assets/audio/1-second-of-silence.mp3");
-    scoreSound = loadSound("assets/audio/1-second-of-silence.mp3");
-    hitSound = loadSound("assets/audio/1-second-of-silence.mp3");
-    dieSound = loadSound("assets/audio/1-second-of-silence.mp3");
-    swooshSound = loadSound("assets/audio/1-second-of-silence.mp3");
-    fireSound = loadSound("assets/audio/1-second-of-silence.mp3");
+//     wingSound = loadSound("assets/audio/1-second-of-silence.mp3");
+//     scoreSound = loadSound("assets/audio/1-second-of-silence.mp3");
+//     hitSound = loadSound("assets/audio/1-second-of-silence.mp3");
+//     dieSound = loadSound("assets/audio/1-second-of-silence.mp3");
+//     swooshSound = loadSound("assets/audio/1-second-of-silence.mp3");
+//     fireSound = loadSound("assets/audio/1-second-of-silence.mp3");
     background = loadSound("assets/audio/background.mp3");
 }
 
@@ -239,7 +239,7 @@ function setup() {
     fireStepCount = fireStep;
     fireSoundCount = 0;
 
-    background.play();
+//     background.play();
 }
 
 function draw() {
@@ -415,8 +415,8 @@ function draw() {
                 MODE = "gameover";
                 state = "dead";
                 if (!MUTE) {
-                    hitSound.play();
-                    dieSound.play();
+//                     hitSound.play();
+//                     dieSound.play();
                 }
 								scoreTings('POST');
 							}
@@ -425,8 +425,8 @@ function draw() {
                 MODE = "gameover";
                 state = "falling";
                 if (!MUTE) {
-                    hitSound.play();
-                    dieSound.play();
+//                     hitSound.play();
+//                     dieSound.play();
                 }
 								scoreTings('POST');
 							}
@@ -446,7 +446,9 @@ function draw() {
             image(birdsFireImg[pose], birdIniX, birdFlyingY, birdFireW, birdFireH);
             fireStepCount -= vBase;
             if (fireSoundCount % 30 == 0) {
-                if (!MUTE) { swooshSound.play() }
+                if (!MUTE) { 
+// 			swooshSound.play() 
+		}
             };
             fireSoundCount++;
         }
@@ -470,7 +472,9 @@ function draw() {
 								// scoreTings('POST');
                 if (SCORE > BESTSCORE) { BESTSCORE = SCORE; updateLocalStorageScore(); };
                 gotScore[0] = true;
-                if (!MUTE) { scoreSound.play(); }
+                if (!MUTE) { 
+// 			scoreSound.play(); 
+		}
             }
         }
 
@@ -480,7 +484,9 @@ function draw() {
 								// scoreTings('POST');
                 if (SCORE > BESTSCORE) { BESTSCORE = SCORE; updateLocalStorageScore(); };
                 gotScore[1] = true;
-                if (!MUTE) { scoreSound.play(); }
+                if (!MUTE) { 
+// 			scoreSound.play(); 
+		}
             }
         }
 
@@ -578,12 +584,16 @@ function keyPressed() {
             Vy = -Vup;
             birdAngle = birdUpAngle;
             stayAngleCount = angleCoolCount;
-            if (!MUTE) { wingSound.play(); }
+            if (!MUTE) { 
+// 		    wingSound.play(); 
+	    }
         }
         else if (MODE == "start") {
             Vy = -Vup;
             MODE = "playing";
-            if (!MUTE) { wingSound.play(); }
+            if (!MUTE) { 
+// 		    wingSound.play(); 
+	    }
         }
 
         else if (MODE == "gameover") {
@@ -597,7 +607,9 @@ function mouseClicked() {
         Vy = -Vup;
         birdAngle = birdUpAngle;
         stayAngleCount = angleCoolCount;
-        if (!MUTE) { wingSound.play(); }
+        if (!MUTE) { 
+// 		wingSound.play(); 
+	}
     }
 
 
@@ -614,7 +626,9 @@ function mouseClicked() {
         else {
             Vy = -Vup;
             MODE = "playing";
-            if (!MUTE) { wingSound.play(); }
+            if (!MUTE) { 
+// 		    wingSound.play(); 
+	    }
         }
     }
 
@@ -653,7 +667,7 @@ function touch() {
     // circle(fireBorder[0][1],fireBorder[1][0],4);
 
     if (hitFire(top, fireBorder) | hitFire(bottom, fireBorder) | hitFire(birdRUCorner, fireBorder) | hitFire(birdRDCorner, fireBorder)) {
-	    fireSound.play();
+// 	    fireSound.play();
         return "fire";
     }
 

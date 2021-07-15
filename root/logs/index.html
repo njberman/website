@@ -16,6 +16,7 @@
             const logsElem = document.getElementById('logs');
             logsElem.innerText = '';
             logs.forEach((log) => logsElem.innerText += `\n${log}`);
+            window.scrollTo(0,document.body.scrollHeight);
           })
           .catch(console.error);
       }, 1000);

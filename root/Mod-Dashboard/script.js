@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ name: newUserNameInput.value, score: newUserScoreInput.value }),
+          body: JSON.stringify({ name: newUserNameInput.value, score: newUserScoreInput.value, createdBy: username }),
         })
           .then(() => getLeaderboard())
           .catch(console.error);

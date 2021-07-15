@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ name, score }),
+          body: JSON.stringify({ name, score, deletedBy: username }),
         })
           .then(() => getLeaderboard())
           .catch(console.error);

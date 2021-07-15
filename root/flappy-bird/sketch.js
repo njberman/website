@@ -164,7 +164,7 @@ function preload() {
     hitSound = loadSound("assets/audio/hit.ogg");
     dieSound = loadSound("assets/audio/die.ogg");
     swooshSound = loadSound("assets/audio/swoosh.ogg");
-    fireSound = loadSoung("assets/audio/fire.mp3");
+    fireSound = loadSound("assets/audio/fire.mp3");
 }
 
 let birdIdx = 0;

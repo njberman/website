@@ -1,0 +1,57 @@
+* {
+	box-sizing: border-box;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 16px;
+}
+
+.container {
+	margin: 1.5rem auto;
+	width: 40rem;
+}
+
+.feudBoard p {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+.feudBoard input {
+	width: 70%;
+	margin: 0.5rem auto;
+	font-size: 
+}
+
+.feudBoard ul {
+	list-style-type: none;
+	margin: 1rem 0 0;
+	padding: 0;
+
+	display: flex;
+	flex-wrap: wrap;
+
+	display: -webkit-flex;
+	-webkit-flex-wrap: wrap;
+}
+
+.feudBoard li {
+	width: calc(50% - 1rem);
+	padding: 0.5rem;
+	margin: 0.5rem;
+
+	border-radius: 5px;
+	border: 1px solid #D0D0D0;
+	
+}
+
+.feudBoard li.masked {
+	background-color: #B0B0B0;
+}
+
+.feudBoard li.masked > span {
+	visibility: hidden;
+}
+
+.feudBoard .actions {
+	margin: 1rem auto;
+	text-align: center;
+}

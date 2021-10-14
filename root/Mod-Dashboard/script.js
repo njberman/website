@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   if (document.referrer != `${window.location.origin}/flappy-bird/index.html` || document.referrer == window.location.href) {
-    return window.location.href = 'https://youtube.com/search?search_query=Don\'t try to hack the system.';
+    return window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
   }
 
   const username = prompt('Please enter your username:');
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     body: JSON.stringify({ username, password }),
   })
     .then((res) => {
-      if (res.status == 400) window.location.href = window.location.origin;
+      if (res.status == 400) window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
       else return;
     })
     .catch(console.error);

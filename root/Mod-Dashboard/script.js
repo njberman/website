@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ name, score, deletedBy: username }),
+          body: JSON.stringify({ name, score, deletedBy: username, username, password }),
         })
           .then(() => getLeaderboard())
           .catch(console.error);
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ name: newUserNameInput.value, score: newUserScoreInput.value, createdBy: username }),
+          body: JSON.stringify({ name: newUserNameInput.value, score: newUserScoreInput.value, createdBy: username, username, password }),
         })
           .then(() => getLeaderboard())
           .catch(console.error);

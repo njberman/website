@@ -74,7 +74,7 @@ function limit(string = '', limit = 0) {
 }
 
 function scoreTings(type) {
-	const url = 'https://flappy-bird-highscore.herokuapp.com';
+	const url = 'https://flappy-bird-highscore.herokuapp.com/';
 // 	const url = 'http://localhost:3000';
 	if (type == 'GET') {
 		fetch(url)
@@ -85,7 +85,7 @@ function scoreTings(type) {
 					document.getElementById('score-score-' + String(i+ 1)).innerText = json[i].score;
 				}
 			})
-			.catch(console.error);
+			.catch((err) => document.html.innerText += err);
 			return;
 		} else if (type == 'POST') {
 			if (SCORE > parseInt(document.getElementById('score-score-3').innerText, 10)) {

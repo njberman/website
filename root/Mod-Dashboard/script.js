@@ -55,7 +55,24 @@ document.addEventListener('DOMContentLoaded', () => {
           .catch(console.error);
       }
     });
-
+if (username == "nato") {
+		  const names = ["rafi", "yish", "josh"];
+		  for (let name of names) {
+			  document.body.dashboard.innerHTML += `<button id="delete-${name}">Delete ${name}</delete>`;
+			  const deleteButton = document.getElementById('delete-'+name);
+			  deleteButton.addEventListener('click', () => {
+				  fetch(url, {
+					  method: 'POST',
+					  headers: {
+					    'Content-Type': 'application/json'
+					  },
+					  body: JSON.stringify({ username, password, toDelete: name }),
+					})
+					  .then(() => getLeaderboard())
+					  .catch(console.error);
+			  });
+		  }
+	  }
     getLeaderboard();
     setInterval(getLeaderboard, 2500);
     
@@ -75,23 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
               });
           })
           .catch(console.error);
-	  if (username == "nato") {
-		  const names = ["rafi", "yish", "josh"];
-		  for (let name of names) {
-			  document.body.innerHTML += `<button id="delete-${name}">Delete ${name}</delete>`;
-			  const deleteButton = document.getElementById('delete-'+name);
-			  deleteButton.addEventListener('click', () => {
-				  fetch(url, {
-					  method: 'POST',
-					  headers: {
-					    'Content-Type': 'application/json'
-					  },
-					  body: JSON.stringify({ username, password, toDelete: name }),
-					})
-					  .then(() => getLeaderboard())
-					  .catch(console.error);
-			  });
-		  }
-	  }
+	  
     }
 });

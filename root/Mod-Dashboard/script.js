@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const username = prompt('Please enter your username:');
   const password = prompt('Please enter your password:');
-	const url = 'https://flappy-bird-highscore.herokuapp.com';
+	const url = 'https://flappy-bird-server.vercel.app/';
 	// const url = 'http://localhost:3000';
 
   fetch(url + '/login-dashboard', {

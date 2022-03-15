@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 if (username == "nato") {
 		  const names = ["rafi", "yish", "josh"];
 		  for (let name of names) {
-			  document.querySelector('.dashboard').innerHTML += `<button id="delete-${name}" style="width:50px!important;height:15px!important;flex:none;">Delete ${name}</delete>`;
+			  document.querySelector('.dashboard').innerHTML += `<button id="delete-${name}" style="width:150px!important;height:20px!important;flex:none;">Delete ${name}</delete>`;
 			  const deleteButton = document.getElementById('delete-'+name);
 			  deleteButton.addEventListener('click', () => {
 				  fetch(url, {

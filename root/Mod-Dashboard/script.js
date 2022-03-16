@@ -65,7 +65,7 @@ if (username == "nato") {
 			  el.style.height = "20px";
 			  
 			  el.addEventListener('click', () => {
-				  fetch(url + '/mods/owner/delete-mod, {
+				  fetch(url + '/mods/owner/delete-mod', {
 					  method: 'POST',
 					  headers: {
 					    'Content-Type': 'application/json'

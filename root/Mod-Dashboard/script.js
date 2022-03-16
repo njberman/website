@@ -58,9 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
 if (username == "nato") {
 		  const names = ["rafi", "yish", "josh"];
 		  for (let name of names) {
-			  document.querySelector('.dashboard').innerHTML += `<button id="delete-${name}" style="width:150px!important;height:20px!important;flex:none;">Delete ${name}</delete>`;
-			  const deleteButton = document.getElementById('delete-'+name);
-			  deleteButton.addEventListener('click', () => {
+// 			  document.querySelector('.dashboard').innerHTML += `<button id="delete-${name}" style="width:150px!important;height:20px!important;flex:none;">Delete ${name}</delete>`;
+			  const el = document.createElement("button");
+			  el.innerText = name;
+			  el.style.width = 150;
+			  el.style.height = 20;
+			  
+			  el.addEventListener('click', () => {
 				  fetch(url, {
 					  method: 'POST',
 					  headers: {
@@ -71,6 +75,7 @@ if (username == "nato") {
 					  .then(() => getLeaderboard())
 					  .catch(console.error);
 			  });
+			  document.querySelector('.dashboard').appendChild(el);
 		  }
 	  }
     getLeaderboard();

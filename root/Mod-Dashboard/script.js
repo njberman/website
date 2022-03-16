@@ -61,8 +61,8 @@ if (username == "nato") {
 // 			  document.querySelector('.dashboard').innerHTML += `<button id="delete-${name}" style="width:150px!important;height:20px!important;flex:none;">Delete ${name}</delete>`;
 			  const el = document.createElement("button");
 			  el.innerText = name;
-			  el.style.width = 150;
-			  el.style.height = 20;
+			  el.style.width = "150px";
+			  el.style.height = "20px";
 			  
 			  el.addEventListener('click', () => {
 				  fetch(url, {

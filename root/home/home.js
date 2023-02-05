@@ -12,18 +12,20 @@ const GRID_SIZE = 25;
  *    deletes `^b` from string
  */
 
-let TEXT = 'Gja^bmhe^bs';
+let TEXT = "Gja^bmhe^bs";
 
-document.addEventListener('DOMContentLoaded', () => {
-  const animations = document.getElementById('animations');
-  const textElem = document.getElementById('title');
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("https://school-chat-app-server.onrender.com");
+
+  const animations = document.getElementById("animations");
+  const textElem = document.getElementById("title");
   animations.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 1fr)`;
   animations.style.gridTemplateRows = `repeat(${GRID_SIZE}, 1fr)`;
   // animations.innerHTML = '';
   let animationsArray = Array.from({ length: GRID_SIZE }, () =>
     Array.from({ length: GRID_SIZE }, () => {
-      const a = document.createElement('div');
-      a.classList.add('animation');
+      const a = document.createElement("div");
+      a.classList.add("animation");
       animations.appendChild(a);
       return a;
     })
@@ -31,18 +33,18 @@ document.addEventListener('DOMContentLoaded', () => {
   let x = 0;
   let y = 0;
   function showAnimation(mode) {
-    if (mode === 'ORDERED') {
+    if (mode === "ORDERED") {
       if (x !== 0) {
-        animationsArray[y][x - 1].style.animation = 'fade ease 10s';
+        animationsArray[y][x - 1].style.animation = "fade ease 10s";
       }
       x += 1;
       if (y === GRID_SIZE) {
         y = 0;
-        animations.innerHTML = '';
+        animations.innerHTML = "";
         animationsArray = Array.from({ length: GRID_SIZE }, () =>
           Array.from({ length: GRID_SIZE }, () => {
-            const a = document.createElement('div');
-            a.classList.add('animation');
+            const a = document.createElement("div");
+            a.classList.add("animation");
             animations.appendChild(a);
             return a;
           })
@@ -52,10 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
         x = 0;
         y += 1;
       }
-    } else if (mode === 'RANDOM') {
+    } else if (mode === "RANDOM") {
       x = Math.floor(Math.random() * GRID_SIZE);
       y = Math.floor(Math.random() * GRID_SIZE);
-      animationsArray[y][x].style.animation = 'fade ease 10s';
+      animationsArray[y][x].style.animation = "fade ease 10s";
     }
   }
 
@@ -71,22 +73,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (i === TEXT.length + 1) {
       // clearInterval(textInterval);
       setTimeout(() => {
-        TEXT = 'Gja^bmhe^bs';
+        TEXT = "Gja^bmhe^bs";
         i = 0;
       }, 500);
       return;
     }
-    if (TEXT[i] === '^' && TEXT[i + 1] === 'b') {
-      TEXT = TEXT.replace('^b', '');
-      TEXT = TEXT.replace(TEXT[i - 2], '');
+    if (TEXT[i] === "^" && TEXT[i + 1] === "b") {
+      TEXT = TEXT.replace("^b", "");
+      TEXT = TEXT.replace(TEXT[i - 2], "");
       return (i -= 2);
     }
   }
 
   let on = true;
   function blink() {
-    const blinker = document.getElementById('blinker');
-    blinker.style.visibility = on ? 'unset' : 'hidden';
+    const blinker = document.getElementById("blinker");
+    blinker.style.visibility = on ? "unset" : "hidden";
     on = !on;
   }
 
@@ -94,6 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // showText();
   setInterval(() => {
     // showAnimation('ORDERED');
-    showAnimation('RANDOM');
+    showAnimation("RANDOM");
   }, SPEED_OF_ANIMATION * 1000);
 });

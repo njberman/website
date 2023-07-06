@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Get allowed words
-  const file = await getFile('../data/possible_words.txt');
+  const file = await getFile('/wordle/data/possible_words.txt');
   const possibleWords = file.split('\n');
 
   const word = possibleWords[Math.floor(Math.random() * possibleWords.length)];

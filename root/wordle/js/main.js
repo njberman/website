@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // Get allowed words
-  const file = await getFile('/data/possible_words.txt');
+  const file = await getFile('../data/possible_words.txt');
   const possibleWords = file.split('\n');
 
   const word = possibleWords[Math.floor(Math.random() * possibleWords.length)];
@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const grid = Array.from({ length: 6 }, (_, i) =>
     Array.from(
       { length: 5 },
-      (__, j) => new Square(i, j, gridEl.children[j + i * 5]),
-    ),
+      (__, j) => new Square(i, j, gridEl.children[j + i * 5])
+    )
   );
 
   let row = 0;
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (row === 5) {
         if (col !== 6) {
           const guess = Array.from({ length: 5 }, (_, i) =>
-            grid[col][i].letter.toLowerCase(),
+            grid[col][i].letter.toLowerCase()
           );
           // Check if word is in given databse of words
           if (!possibleWords.includes(guess.join(''))) {
@@ -123,4 +123,3 @@ class Square {
     }
   }
 }
-

@@ -24,6 +24,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const file = await getFile('/wordle/data/possible_words.txt');
   const possibleWords = file.split('\n');
 
+  const file2 = await getFile('/wordle/data/allowed_words.txt');
+  const allowedWords = file.split('\n');
+
   const word = possibleWords[Math.floor(Math.random() * possibleWords.length)];
 
   // Set up grid
@@ -59,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             grid[col][i].letter.toLowerCase()
           );
           // Check if word is in given databse of words
-          if (!possibleWords.includes(guess.join(''))) {
+          if (!allowedWords.includes(guess.join(''))) {
             showAlert('Word not allowed');
             return;
           }

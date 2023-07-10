@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const possibleWords = file.split('\n');
 
   const file2 = await getFile('/wordle/data/allowed_words.txt');
-  const allowedWords = file.split('\n');
+  const allowedWords = file2.split('\n');
 
   const word = possibleWords[Math.floor(Math.random() * possibleWords.length)];
 

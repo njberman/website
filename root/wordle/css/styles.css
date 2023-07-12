@@ -4,6 +4,7 @@
   box-sizing: border-box;
 
   font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+  user-select: none;
 }
 
 html,
@@ -17,9 +18,103 @@ body {
 .game {
   width: 100vw;
   height: 100vh;
-  display: flex;
+  display: grid;
   justify-content: center;
   align-items: center;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.game .middle {
+  display: grid;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.game .middle .container {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+}
+
+.game .middle button {
+  width: 40%;
+  height: 70%;
+}
+
+.game .left,
+.game .right {
+  width: 100%;
+  height: 50%;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(1, 1fr);
+  padding: 1.5em;
+}
+
+.game .row {
+  width: 100%;
+  display: grid;
+  grid-template-rows: repeat(1, 1fr);
+  height: 100%;
+}
+
+.game .row#one {
+  grid-template-columns: repeat(5, 1fr) repeat(2, 0.5fr);
+}
+
+.game .row#two {
+  grid-template-columns: 0.5fr repeat(5, 1fr) 0.5fr;
+}
+
+.game .row#three {
+  grid-template-columns: 1fr repeat(4, 1fr) repeat(2, 0.5fr);
+}
+
+.game .row#oneone {
+  grid-template-columns: repeat(2, 0.5fr) repeat(5, 1fr);
+}
+
+.game .row#twotwo {
+  grid-template-columns: repeat(3, 0.5fr) repeat(4, 1fr) 0.5fr;
+}
+
+.game .row#threethree {
+  grid-template-columns: repeat(2, 0.5fr) repeat(3, 1fr) 2fr;
+}
+
+.game button img {
+  width: 30%;
+  height: 30%;
+}
+
+.game button {
+  font-weight: bold;
+  font-size: 2em;
+  color: #ffffff;
+  background-color: #818384;
+
+  border: none;
+  border-radius: 5px;
+  margin: 2.5px;
+  cursor: pointer;
+
+  user-select: none;
+}
+
+.game button#enter {
+  font-size: 1.5em;
+}
+
+.game button:hover {
+  background-color: #6e7071;
+}
+
+.game button:active {
+  background-color: rgb(114, 115, 117);
 }
 
 .grid {
@@ -50,16 +145,19 @@ body {
   border: 3px solid #565758;
 }
 
-.square.yellow {
-  background-color: #b59f3b;
+.square.yellow,
+button.key.yellow {
+  background-color: #b59f3b !important;
 }
 
-.square.green {
-  background-color: #538d4e;
+.square.green,
+button.key.green {
+  background-color: #538d4e !important;
 }
 
-.square.grey {
-  background-color: #3a3a3c;
+.square.grey,
+button.key.grey {
+  background-color: #3a3a3c !important;
 }
 
 .alert {
@@ -100,4 +198,3 @@ body {
     opacity: 0;
   }
 }
-

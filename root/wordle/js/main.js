@@ -20,9 +20,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, 3000);
   }
 
+  function updateLocalStorageItem(item, value) {
+    window.localStorage.setItem(item, JSON.stringify(value));
+  }
+
+  function getLocalStorageItem(item) {
+    const value = JSON.parse(window.localStorage.getItem(item));
+    if (!value) {
+      updateLocalStorageItem(item, []);
+      return getLocalStorageItem();
+    } else return value;
+  }
+
   function getUsedWords() {
     const words = JSON.parse(window.localStorage.getItem('words'));
-    console.log(words);
     if (!words) {
       window.localStorage.setItem('words', JSON.stringify([]));
       return getUsedWords();
@@ -48,21 +59,61 @@ document.addEventListener('DOMContentLoaded', async () => {
     return key;
   }
 
+  function numOccurences(val, arr) {
+    let sum = 0;
+    for (const v of arr) {
+      if (v === val) sum++;
+    }
+    return sum;
+  }
+
   keyEls.forEach((key) => {
-    key.addEventListener('click', () => pressKey(key.innerText));
+    key.addEventListener('click', (e) => {
+      pressKey(key.innerText);
+      e.target.blur();
+    });
   });
 
   const backspaceEl = document.querySelector('#backspace');
-  backspaceEl.addEventListener('click', () => backspace());
+  backspaceEl.addEventListener('click', (e) => {
+    backspace();
+    e.target.blur();
+  });
 
   const enterEl = document.querySelector('#enter');
-  enterEl.addEventListener('click', () => enter());
+  enterEl.addEventListener('click', (e) => {
+    enter();
+    e.target.blur();
+  });
 
   const restartEl = document.querySelector('#restart');
   restartEl.addEventListener('click', (e) => {
     restart();
     e.target.blur();
   });
+
+  const gamesPlayedEl = document.getElementById('played');
+  const gamesWonEl = document.getElementById('won');
+  const avgGuessesEl = document.getElementById('avg-guesses');
+
+  function updateStats() {
+    const gamesPlayed = getLocalStorageItem('games');
+    gamesPlayedEl.innerText = gamesPlayed.length;
+
+    let sum1 = 0;
+    let sum2 = 0;
+    for (const game of gamesPlayed) {
+      sum1 += game.guesses;
+      sum2 += game.won ? 1 : 0;
+    }
+
+    gamesWonEl.innerText = sum2;
+
+    const avg = Math.round(sum1 / gamesPlayed.length);
+    avgGuessesEl.innerText = avg > 0 ? avg : 0;
+  }
+
+  updateStats();
 
   // Get allowed words (prod)
   const file = await getFile('/wordle/data/possible_words.txt');
@@ -99,8 +150,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (!getUsedWords().includes(selectedWord)) {
       addUsedWord(selectedWord);
+      console.log(selectedWord);
       return selectedWord;
     } else return getRandomWord();
+    // return 'photo';
   }
 
   let word = getRandomWord();
@@ -157,7 +210,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         );
         // Check if word is in given databse of words
         if (!allowedWords.includes(guess.join(''))) {
-          showAlert('Word not allowed');
+          showAlert('Word not found');
           return;
         }
 
@@ -168,13 +221,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           grid[col][i].changeColour('grey');
           findKey(letter).classList.add('grey');
           if (word.includes(letter)) {
-            // grid[col][i].changeColour('yellow');
             included.push(letter);
-          }
-          if (letter === word[i]) {
-            grid[col][i].changeColour('green');
-            findKey(letter).classList.remove('grey');
-            findKey(letter).classList.add('green');
           }
         }
 
@@ -182,16 +229,24 @@ document.addEventListener('DOMContentLoaded', async () => {
           const letter = included[i];
           const idxsGuess = find(letter, guess);
           const idxsWord = find(letter, word);
-          for (let j = 0; j < idxsWord.length; j++) {
-            if (guess[idxsGuess[j]] !== word[idxsGuess[j]]) {
-              if (idxsGuess.length <= idxsWord.length) {
-                for (let k = 0; k < idxsGuess.length; k++) {
-                  if (guess[idxsGuess[k]] !== word[idxsGuess[k]]) {
-                    grid[col][idxsGuess[k]].changeColour('yellow');
-                    findKey(letter).classList.remove('grey');
-                    findKey(letter).classList.add('yellow');
-                  }
-                }
+          let gridTem = [undefined, undefined, undefined, undefined];
+          let n = 0;
+          for (let j = 0; j < idxsGuess.length; j++) {
+            if (idxsWord.includes(idxsGuess[j])) {
+              grid[col][idxsGuess[j]].changeColour('green');
+              findKey(letter).classList.remove('grey');
+              findKey(letter).classList.add('green');
+              gridTem[idxsGuess[j]] = 'green';
+            }
+          }
+
+          if (
+            numOccurences('green', gridTem) < idxsWord.length &&
+            idxsGuess.length >= idxsWord.length
+          ) {
+            for (let j = 0; j < idxsWord.length; j++) {
+              if (gridTem[idxsGuess[j]] !== 'green') {
+                grid[col][idxsGuess[j]].changeColour('yellow');
               }
             }
           }
@@ -199,6 +254,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         if (guess.join('') === word) {
           showAlert('You won!');
+
+          const gamesPlayed = getLocalStorageItem('games');
+          gamesPlayed.push({
+            date: Date(),
+            guesses: col + 1,
+            won: true,
+            word,
+          });
+          updateLocalStorageItem('games', gamesPlayed);
+          updateStats();
           return;
         }
 
@@ -206,7 +271,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         col++;
         if (col === 6) {
           showAlert(`Word was: ${word}`);
+
+          const gamesPlayed = getLocalStorageItem('games');
+          gamesPlayed.push({
+            date: Date(),
+            guesses: 6,
+            won: false,
+            word,
+          });
+          updateLocalStorageItem('games', gamesPlayed);
         }
+        updateStats();
       }
     }
   }
@@ -226,6 +301,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       keyEl.classList.remove(...Object.values(['grey', 'yellow', 'green']));
       keyEl.classList.add('empty');
     }
+
+    updateStats();
   }
 
   function find(letter, arr) {

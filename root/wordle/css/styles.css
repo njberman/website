@@ -46,11 +46,11 @@ body {
 .game .left,
 .game .right {
   width: 100%;
-  height: 50%;
+  height: 100%;
   display: grid;
   justify-content: center;
   align-items: center;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: 25% repeat(3, calc(50% / 3)) 25%;
   grid-template-columns: repeat(1, 1fr);
   padding: 1.5em;
 }
@@ -197,4 +197,31 @@ button.key.grey {
   to {
     opacity: 0;
   }
+}
+
+.game .right {
+}
+
+.game .right .top {
+  height: 100%;
+  padding-bottom: 1.2rem;
+  padding-left: 1.2rem;
+  margin-bottom: 1.2rem;
+  color: #ffffff;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  background-color: #939597;
+  border-radius: 10px;
+}
+
+.game .right .bottom {
+  height: 100%;
+}
+
+#played,
+#won,
+#avg-guesses {
+  color: #538d4e;
 }

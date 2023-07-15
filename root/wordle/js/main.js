@@ -92,25 +92,54 @@ document.addEventListener('DOMContentLoaded', async () => {
     e.target.blur();
   });
 
+  const statsEl = document.querySelector('.stats');
   const gamesPlayedEl = document.getElementById('played');
-  const gamesWonEl = document.getElementById('won');
-  const avgGuessesEl = document.getElementById('avg-guesses');
+  const winRateEl = document.getElementById('win-rate');
+  // const avgGuessesEl = document.getElementById('avg-guesses');
+  const graphEl = document.querySelector('.graph');
+  const closeStats = document.getElementById('close');
+
+  closeStats.addEventListener('click', () => {
+    statsEl.style.display = 'none';
+  });
 
   function updateStats() {
     const gamesPlayed = getLocalStorageItem('games');
     gamesPlayedEl.innerText = gamesPlayed.length;
 
+    let guessCount = Array.from({ length: 6 }, () => 0);
+
     let sum1 = 0;
     let sum2 = 0;
     for (const game of gamesPlayed) {
-      sum1 += game.guesses;
+      guessCount[game.guesses - 1]++;
       sum2 += game.won ? 1 : 0;
     }
 
-    gamesWonEl.innerText = sum2;
+    let highestGuess = 0;
+    for (let i = 0; i < guessCount.length; i++) {
+      const guess_ = guessCount[i];
+      highestGuess = guess_ > highestGuess ? guess_ : highestGuess;
+    }
+
+    for (let i = 0; i < graphEl.children.length; i++) {
+      const [_, dist] = graphEl.children[i].children;
+      dist.innerText = guessCount[i];
+      dist.style.width = `${
+        guessCount[i] !== 0 ? (100 / highestGuess) * guessCount[i] : 7.5
+      }%`;
+      if (
+        gamesPlayed.length > 0 &&
+        gamesPlayed[gamesPlayed.length - 1].guesses === i + 1
+      )
+        dist.classList.add('green');
+      else dist.classList.remove('green');
+    }
+
+    winRateEl.innerText = Math.floor((sum2 / gamesPlayed.length) * 100);
 
     const avg = Math.round(sum1 / gamesPlayed.length);
-    avgGuessesEl.innerText = avg > 0 ? avg : 0;
+    // avgGuessesEl.innerText = avg > 0 ? avg : 0;
   }
 
   updateStats();
@@ -241,12 +270,16 @@ document.addEventListener('DOMContentLoaded', async () => {
           }
 
           if (
-            numOccurences('green', gridTem) < idxsWord.length &&
-            idxsGuess.length >= idxsWord.length
+            (numOccurences('green', gridTem) < idxsWord.length &&
+              idxsGuess.length >= idxsWord.length) ||
+            (numOccurences('green', gridTem) === 0 &&
+              idxsGuess.length < idxsWord.length)
           ) {
-            for (let j = 0; j < idxsWord.length; j++) {
+            for (let j = 0; j < idxsGuess.length; j++) {
               if (gridTem[idxsGuess[j]] !== 'green') {
                 grid[col][idxsGuess[j]].changeColour('yellow');
+                findKey(letter).classList.remove('grey', 'green');
+                findKey(letter).classList.add('yellow');
               }
             }
           }
@@ -264,6 +297,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           });
           updateLocalStorageItem('games', gamesPlayed);
           updateStats();
+          statsEl.style.display = 'grid';
           return;
         }
 
@@ -280,6 +314,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             word,
           });
           updateLocalStorageItem('games', gamesPlayed);
+          statsEl.style.display = 'grid';
         }
         updateStats();
       }

@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Get allowed words (prod)
   const file = await getFile('/wordle/data/possible_words.txt');
   const file2 = await getFile('/wordle/data/allowed_words.txt');
-  const file3 = await getFile('/wordle/data/possible_word?s_freq.txt');
+  const file3 = await getFile('/wordle/data/possible_words_freq.txt');
 
   // Get allowed words (dev)
   // const file = await getFile('/data/possible_words.txt');

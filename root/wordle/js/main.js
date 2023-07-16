@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.body.appendChild(newAlert);
     setTimeout(() => {
       newAlert.classList.add('fade');
-      newAlert.style.animation = `fade ${duration / 1000} 1 ease-in-out`;
+      newAlert.style.animation = `fade ${duration / 1000}s 1 ease-in-out`;
       setTimeout(() => {
         document.body.lastChild.remove();
       }, duration);
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Get allowed words (prod)
   const file = await getFile('/wordle/data/possible_words.txt');
   const file2 = await getFile('/wordle/data/allowed_words.txt');
-  const file3 = await getFile('/wordle/data/possible_words_freq.txt');
+  const file3 = await getFile('/wordle/data/possible_word?s_freq.txt');
 
   // Get allowed words (dev)
   // const file = await getFile('/data/possible_words.txt');
@@ -444,7 +444,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         row = 0;
         col++;
         if (col === 6 && guess.join('') !== word) {
-          showAlert(word.toUpperCase(), 5000);
+          showAlert(word.toUpperCase(), 7000);
 
           const gamesPlayed = getLocalStorageItem('games');
           gamesPlayed.push({

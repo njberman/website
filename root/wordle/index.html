@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="icon" type="image/x-icon" href="/data/favicon.ico" />
+    <!-- <link rel="icon" type="image/x-icon" href="/wordle/data/favicon.ico"> -->
     <title>Wordle</title>
   </head>
   <body>
@@ -31,7 +33,10 @@
           <div></div>
         </div>
         <div class="row" id="three">
-          <button id="enter">Enter</button>
+          <button id="enter">
+            <!-- <img src="/data/enter.svg" alt="" /> -->
+            <img src="/wordle/data/enter.svg" alt="" />
+          </button>
           <button class="key" id="Z">Z</button>
           <button class="key" id="X">X</button>
           <button class="key" id="C">C</button>
@@ -45,14 +50,24 @@
 
       <div class="middle">
         <div class="grid"></div>
-        <div class="container">
-          <button id="restart">Restart</button>
-        </div>
       </div>
 
       <!-- Right half of keyboard -->
       <div class="right">
-        <div></div>
+        <div class="button-bar">
+          <div class="help-button">
+            <!-- <img id="help-button" src="/data/help.svg" alt="" /> -->
+            <img src="/wordle/data/help.svg" alt="" />
+          </div>
+          <div class="stats-button">
+            <!-- <img id="stats-button" src="/data/stats.svg" alt="" /> -->
+            <img src="/wordle/data/stats.svg" alt="" />
+          </div>
+          <div class="restart-button">
+            <!-- <img id="restart" src="/data/restart.svg" alt="" /> -->
+            <img src="/wordle/data/restart.svg" alt="" />
+          </div>
+        </div>
         <div class="row" id="oneone">
           <div></div>
           <div></div>
@@ -82,6 +97,7 @@
             <!-- <img src="/data/delete.svg" alt="" /> -->
             <img src="/wordle/data/delete.svg" alt="" />
           </button>
+          <div></div>
         </div>
         <div></div>
       </div>
@@ -89,10 +105,14 @@
     </div>
 
     <div class="stats">
-      <div id="close">x</div>
-      <div class="statistics">
+      <div class="top-section">
         <h3>STATISTICS</h3>
-        <div></div>
+        <div id="close">
+          <!-- <img src="/data/x.svg" alt="" /> -->
+          <img src="/wordle/data/x.svg" alt="" />
+        </div>
+      </div>
+      <div class="statistics">
         <div>
           <div class="stat" id="played"></div>
           <span class="title">Played</span>
@@ -132,6 +152,68 @@
         </div>
       </div>
     </div>
+
+    <div class="help">
+      <div class="top-bit">
+        <h3>HOW TO PLAY</h3>
+        <div id="close-help">
+          <!-- <img src="/data/x.svg" alt="" /> -->
+          <img src="/wordle/data/x.svg" alt="" />
+        </div>
+      </div>
+      <div>
+        <ul>
+          <li>You must try to guess the word</li>
+          <li>You have 6 guesses</li>
+          <li>Each guess must be a valid 5 letter word</li>
+          <li>
+            The color of each tile will change and give you information about
+            that letter
+          </li>
+          <li>
+            <span class="c-green">Green</span> means that letter is in the word,
+            in that spot
+          </li>
+          <li>
+            <span class="c-yellow">Yellow</span> means that letter is in the
+            word, in a different spot
+          </li>
+          <li>
+            <span class="c-grey">Grey</span> means that letter is not in the
+            word at all.
+          </li>
+        </ul>
+      </div>
+      <div class="examples">
+        <div class="title">
+          <h3>EXAMPLE</h3>
+        </div>
+        <div class="example"></div>
+        <div class="example" id="example1">
+          <div class="square grey">R</div>
+          <div class="square green">A</div>
+          <div class="square grey">B</div>
+          <div class="square grey">B</div>
+          <div class="square grey">I</div>
+        </div>
+        <div class="example" id="example2">
+          <div class="square grey">C</div>
+          <div class="square yellow">O</div>
+          <div class="square yellow">H</div>
+          <div class="square grey">E</div>
+          <div class="square grey">N</div>
+        </div>
+        <div class="example" id="example4">
+          <div class="square green">H</div>
+          <div class="square green">A</div>
+          <div class="square green">S</div>
+          <div class="square green">M</div>
+          <div class="square green">O</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay"></div>
 
     <script src="js/main.js"></script>
   </body>

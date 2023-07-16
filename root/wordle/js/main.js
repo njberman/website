@@ -7,17 +7,29 @@ async function getFile(fileURL) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  let allow = true;
+  const gameEl = document.body.querySelector('.game');
   function showAlert(string) {
+    if (
+      document.body.children[
+        document.body.children.length - 1
+      ].classList.contains('alert') &&
+      document.body.children[document.body.children.length - 1].nodeName ===
+        'DIV'
+    ) {
+      document.body.children[document.body.children.length - 1].remove();
+      return showAlert(string);
+    }
     const newAlert = document.createElement('div');
     newAlert.classList.add('alert');
     newAlert.innerText = string;
-    document.body.querySelector('.game').appendChild(newAlert);
+    document.body.appendChild(newAlert);
     setTimeout(() => {
       newAlert.classList.add('fade');
       setTimeout(() => {
-        document.body.querySelector('.game').lastChild.remove();
+        document.body.lastChild.remove();
       }, 1000);
-    }, 3000);
+    }, 1500);
   }
 
   function updateLocalStorageItem(item, value) {
@@ -97,11 +109,47 @@ document.addEventListener('DOMContentLoaded', async () => {
   const winRateEl = document.getElementById('win-rate');
   // const avgGuessesEl = document.getElementById('avg-guesses');
   const graphEl = document.querySelector('.graph');
-  const closeStats = document.getElementById('close');
+  const closeStatsEl = document.getElementById('close');
 
-  closeStats.addEventListener('click', () => {
-    statsEl.style.display = 'none';
+  const overlayEl = document.querySelector('.overlay');
+  overlayEl.addEventListener('click', () => {
+    closeStats();
+    closeHelp();
   });
+
+  closeStatsEl.addEventListener('click', () => closeStats());
+
+  const statsButton = document.querySelector('#stats-button');
+  statsButton.addEventListener('click', () => showStats());
+
+  const helpButton = document.querySelector('#help-button');
+  const helpEl = document.querySelector('.help');
+  const closeHelpButton = helpEl.children[0].children[1];
+  helpButton.addEventListener('click', () => {
+    helpEl.style.display = 'grid';
+    gameEl.classList.add('blur');
+    overlayEl.style.display = 'block';
+  });
+
+  closeHelpButton.addEventListener('click', () => closeHelp());
+
+  function closeHelp() {
+    helpEl.style.display = 'none';
+    gameEl.classList.remove('blur');
+    overlayEl.style.display = 'none';
+  }
+
+  function closeStats() {
+    statsEl.style.display = 'none';
+    gameEl.classList.remove('blur');
+    overlayEl.style.display = 'none';
+  }
+
+  function showStats() {
+    statsEl.style.display = 'grid';
+    gameEl.classList.add('blur');
+    overlayEl.style.display = 'block';
+  }
 
   function updateStats() {
     const gamesPlayed = getLocalStorageItem('games');
@@ -164,28 +212,32 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Pick random word, based on word freq
   function getRandomWord() {
-    const totalWeight = possibleWordsFreqs.reduce((sum, freq) => sum + freq);
-    let randomNum = Math.random() * totalWeight;
+    if (getUsedWords().includes('hasmo')) {
+      const totalWeight = possibleWordsFreqs.reduce((sum, freq) => sum + freq);
+      let randomNum = Math.random() * totalWeight;
 
-    let selectedWord;
-    for (let i = 0; i < possibleWords.length; i++) {
-      const word = possibleWords[i];
-      randomNum -= possibleWordsFreqs[i];
-      if (randomNum <= 0) {
-        selectedWord = word;
-        break;
+      let selectedWord;
+      for (let i = 0; i < possibleWords.length; i++) {
+        const word = possibleWords[i];
+        randomNum -= possibleWordsFreqs[i];
+        if (randomNum <= 0) {
+          selectedWord = word;
+          break;
+        }
       }
-    }
 
-    if (!getUsedWords().includes(selectedWord)) {
-      addUsedWord(selectedWord);
-      console.log(selectedWord);
-      return selectedWord;
-    } else return getRandomWord();
-    // return 'photo';
+      if (!getUsedWords().includes(selectedWord)) {
+        addUsedWord(selectedWord);
+        return selectedWord;
+      } else return getRandomWord();
+    }
+    addUsedWord('hasmo');
+    return 'hasmo';
+    return 'onono';
   }
 
   let word = getRandomWord();
+  console.log(word);
 
   // Set up grid
   const gridEl = document.querySelector('.grid');
@@ -207,6 +259,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   let row = 0;
   let col = 0;
 
+  function lastCol() {
+    let last = 0;
+    for (let i = 0; i < grid.length; i++) {
+      if (grid[i][0].letter !== '') last = i;
+    }
+    return last;
+  }
+
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Backspace') {
       backspace();
@@ -225,8 +285,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function pressKey(key) {
-    if (row <= 4 && ABC.includes(key.toLowerCase())) {
+    if (row < 5 && col < 6 && ABC.includes(key.toLowerCase()) && allow) {
       grid[col][row].changeLetter(key);
+      grid[col][row].element.classList.remove('nozoom');
+      grid[col][row].element.classList.add('zoom');
+      const storedRow = row;
+      const storedCol = col;
+      setTimeout(() => {
+        grid[storedCol][storedRow].element.classList.remove('zoom');
+        grid[storedCol][storedRow].element.classList.add('nozoom');
+      }, 100);
       row++;
     }
   }
@@ -239,16 +307,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         );
         // Check if word is in given databse of words
         if (!allowedWords.includes(guess.join(''))) {
-          showAlert('Word not found');
+          // showAlert('Word not found');
+          for (let i = 0; i < 5; i++) {
+            grid[col][i].element.classList.add('shake');
+            setTimeout(() => {
+              grid[col][i].element.classList.remove('shake');
+            }, 100);
+          }
           return;
         }
 
         // Give information about word guessed
         const included = [];
+        const gridCp = grid.slice();
+        for (const row_ of gridCp) {
+          for (const cell of row_) {
+            cell.cp = true;
+          }
+        }
+
         for (let i = 0; i < 5; i++) {
           const letter = guess[i];
-          grid[col][i].changeColour('grey');
-          findKey(letter).classList.add('grey');
+          gridCp[col][i].changeColour('grey');
           if (word.includes(letter)) {
             included.push(letter);
           }
@@ -259,52 +339,111 @@ document.addEventListener('DOMContentLoaded', async () => {
           const idxsGuess = find(letter, guess);
           const idxsWord = find(letter, word);
           let gridTem = [undefined, undefined, undefined, undefined];
-          let n = 0;
           for (let j = 0; j < idxsGuess.length; j++) {
             if (idxsWord.includes(idxsGuess[j])) {
-              grid[col][idxsGuess[j]].changeColour('green');
-              findKey(letter).classList.remove('grey');
-              findKey(letter).classList.add('green');
+              gridCp[col][idxsGuess[j]].changeColour('green');
               gridTem[idxsGuess[j]] = 'green';
             }
           }
 
           if (
-            (numOccurences('green', gridTem) < idxsWord.length &&
-              idxsGuess.length >= idxsWord.length) ||
-            (numOccurences('green', gridTem) === 0 &&
-              idxsGuess.length < idxsWord.length)
+            numOccurences('green', gridTem) < idxsWord.length &&
+            idxsGuess.length > 0
           ) {
-            for (let j = 0; j < idxsGuess.length; j++) {
+            const left = idxsWord.length - numOccurences('green', gridTem);
+            for (
+              let j = 0;
+              // j < idxsGuess.length >= idxsWord.length
+              //   ? idxsWord.length
+              //   : idxsGuess.length;
+              j <
+              (idxsGuess.length >= idxsWord.length
+                ? idxsWord.length
+                : idxsGuess.length);
+              j++
+            ) {
               if (gridTem[idxsGuess[j]] !== 'green') {
-                grid[col][idxsGuess[j]].changeColour('yellow');
-                findKey(letter).classList.remove('grey', 'green');
-                findKey(letter).classList.add('yellow');
+                gridCp[col][idxsGuess[j]].changeColour('yellow');
+              } else {
+                // j--;
+                continue;
               }
             }
           }
         }
 
-        if (guess.join('') === word) {
-          showAlert('You won!');
+        let offset = 0;
+        for (let i = 0; i < 5; i++) {
+          grid[col][i].element.classList.remove('reveal2');
+          setTimeout(() => {
+            allow = false;
+            grid[lastCol()][i].element.classList.add('reveal1');
+          }, offset);
+          setTimeout(() => {
+            grid[lastCol()][i].element.classList.remove('reveal1');
+            grid[lastCol()][i].element.classList.add('reveal2');
+            grid[lastCol()][i].element.classList.add(
+              gridCp[lastCol()][i].colour
+            );
+            setTimeout(() => {
+              grid[lastCol()][i].element.classList.remove('reveal2');
+              if (i === 4) {
+                allow = true;
+                if (guess.join('') === word) {
+                  let jumpOffset = 0;
+                  for (let j = 0; j < 5; j++) {
+                    console.log(lastCol());
+                    setTimeout(() => {
+                      grid[lastCol()][j].element.classList.add('jump1');
+                      setTimeout(() => {
+                        grid[lastCol()][j].element.classList.remove('jump1');
+                        grid[lastCol()][j].element.classList.add('jump2');
+                        setTimeout(() => {
+                          grid[lastCol()][j].element.classList.remove('jump2');
+                          if (j === 4) {
+                            let text = '';
+                            if (lastCol() === 0) text = 'Amazing!';
+                            if (lastCol() === 1) text = 'Fantastic!';
+                            if (lastCol() === 2) text = 'Impressive!';
+                            if (lastCol() === 3) text = 'Well done!';
+                            if (lastCol() === 4) text = 'Not bad!';
+                            if (lastCol() === 5) text = 'Not great';
+                            showAlert(text);
 
-          const gamesPlayed = getLocalStorageItem('games');
-          gamesPlayed.push({
-            date: Date(),
-            guesses: col + 1,
-            won: true,
-            word,
-          });
-          updateLocalStorageItem('games', gamesPlayed);
-          updateStats();
-          statsEl.style.display = 'grid';
-          return;
+                            const gamesPlayed = getLocalStorageItem('games');
+                            gamesPlayed.push({
+                              date: Date(),
+                              guesses: col + 1,
+                              won: true,
+                              word,
+                            });
+                            updateLocalStorageItem('games', gamesPlayed);
+                            updateStats();
+                            showStats();
+                          }
+                        }, 100);
+                      }, 100);
+                    }, jumpOffset);
+                    jumpOffset += 100;
+                  }
+                }
+
+                for (let j = 0; j < 5; j++) {
+                  findKey(grid[lastCol()][j].letter).classList.remove('grey');
+                  findKey(grid[lastCol()][j].letter).classList.add(
+                    grid[lastCol()][j].colour
+                  );
+                }
+              }
+            }, 200);
+          }, 200 + offset);
+          offset += 300;
         }
 
         row = 0;
         col++;
-        if (col === 6) {
-          showAlert(`Word was: ${word}`);
+        if (col === 6 && guess.join('') !== word) {
+          showAlert(word.toUpperCase());
 
           const gamesPlayed = getLocalStorageItem('games');
           gamesPlayed.push({
@@ -314,7 +453,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             word,
           });
           updateLocalStorageItem('games', gamesPlayed);
-          statsEl.style.display = 'grid';
+          showStats();
         }
         updateStats();
       }
@@ -323,17 +462,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   function restart() {
     grid = Array.from({ length: 6 }, (_, i) =>
-      Array.from(
-        { length: 5 },
-        (__, j) => new Square(i, j, gridEl.children[j + i * 5])
-      )
+      Array.from({ length: 5 }, (__, j) => {
+        return new Square(i, j, gridEl.children[j + i * 5]);
+      })
     );
+    for (let i = 1; i < 99999; i++) {
+      window.clearInterval(i);
+      window.clearTimeout(i);
+    }
+    word = col !== 0 || row !== 0 ? getRandomWord() : word;
+    console.log(word);
     col = 0;
     row = 0;
-    word = getRandomWord();
 
     for (const keyEl of keyEls) {
-      keyEl.classList.remove(...Object.values(['grey', 'yellow', 'green']));
+      keyEl.classList.remove('grey', 'yellow', 'green');
       keyEl.classList.add('empty');
     }
 
@@ -350,25 +493,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 class Square {
-  constructor(i, j, element) {
+  constructor(i, j, element, cp) {
     this.i = i;
     this.j = j;
     this.element = element;
     this.element.innerText = '';
     this.letter = '';
     this.colour = 'empty';
+    this.cp = cp || false;
     this.changeColour('empty');
+    this.element.classList.remove('reveal1', 'reveal2', 'zoom', 'nozoom');
   }
 
   changeColour(colour) {
+    this.element.classList.remove('letter');
     if (colour !== 'empty') {
-      this.element.classList.remove('letter');
-      this.element.classList.replace(this.colour, colour);
+      if (!this.cp) {
+        this.element.classList.replace(this.colour, colour);
+      }
       this.colour = colour;
     } else {
-      this.element.classList.remove(
-        ...Object.values(['grey', 'yellow', 'green'])
-      );
+      this.element.classList.remove('grey', 'yellow', 'green');
       this.element.classList.add('empty');
     }
   }

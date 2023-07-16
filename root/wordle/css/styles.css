@@ -230,7 +230,6 @@ button.key.grey {
 
 .alert.fade {
   opacity: 0;
-  animation: fade 1s 1 ease-in-out;
 }
 
 @keyframes fade {

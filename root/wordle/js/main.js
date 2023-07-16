@@ -9,7 +9,7 @@ async function getFile(fileURL) {
 document.addEventListener('DOMContentLoaded', async () => {
   let allow = true;
   const gameEl = document.body.querySelector('.game');
-  function showAlert(string) {
+  function showAlert(string, duration = 1000) {
     if (
       document.body.children[
         document.body.children.length - 1
@@ -26,9 +26,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.body.appendChild(newAlert);
     setTimeout(() => {
       newAlert.classList.add('fade');
+      newAlert.style.animation = `fade ${duration / 1000} 1 ease-in-out`;
       setTimeout(() => {
         document.body.lastChild.remove();
-      }, 1000);
+      }, duration);
     }, 1500);
   }
 
@@ -193,14 +194,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateStats();
 
   // Get allowed words (prod)
-  const file = await getFile('/wordle/data/possible_words.txt');
-  const file2 = await getFile('/wordle/data/allowed_words.txt');
-  const file3 = await getFile('/wordle/data/possible_words_freq.txt');
+  // const file = await getFile('/wordle/data/possible_words.txt');
+  // const file2 = await getFile('/wordle/data/allowed_words.txt');
+  // const file3 = await getFile('/wordle/data/possible_words_freq.txt');
 
   // Get allowed words (dev)
-  // const file = await getFile('/data/possible_words.txt');
-  // const file2 = await getFile('/data/allowed_words.txt');
-  // const file3 = await getFile('/data/possible_words_freq.txt');
+  const file = await getFile('/data/possible_words.txt');
+  const file2 = await getFile('/data/allowed_words.txt');
+  const file3 = await getFile('/data/possible_words_freq.txt');
 
   const possibleWords = file.split('\n');
 
@@ -443,7 +444,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         row = 0;
         col++;
         if (col === 6 && guess.join('') !== word) {
-          showAlert(word.toUpperCase());
+          showAlert(word.toUpperCase(), 5000);
 
           const gamesPlayed = getLocalStorageItem('games');
           gamesPlayed.push({

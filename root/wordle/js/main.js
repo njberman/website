@@ -414,7 +414,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             const gamesPlayed = getLocalStorageItem('games');
                             gamesPlayed.push({
                               date: Date(),
-                              guesses: col + 1,
+                              guesses: lastCol() + 1,
                               won: true,
                               word,
                             });

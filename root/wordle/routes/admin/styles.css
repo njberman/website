@@ -1,0 +1,119 @@
+@font-face {
+  font-family: 'Phrygia';
+  src: url('./Phrygia-elvB.ttf');
+}
+
+@font-face {
+  font-family: 'CryptoCrash';
+  src: url('./CryptoCrash-K7jWe.ttf');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: 'Clear Sans', 'Helvetica Neue', Arial, sans-serif;
+  user-select: none;
+  color: #ffffff;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'CryptoCrash';
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+
+  background-color: #000000;
+}
+
+.main {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 4fr 0.5fr;
+}
+
+.main > .top,
+.main > .bottom {
+  width: 100%;
+  height: 100%;
+}
+
+.main > .top {
+  display: grid;
+  place-items: center;
+  font-size: 2.5rem;
+}
+
+.main > .bottom {
+  display: grid;
+  grid-template-columns: 0.1fr 1fr 1fr 0.1fr;
+  gap: 10px;
+}
+
+.main > .bottom > .section.left,
+.main > .bottom > .section.right {
+  width: 100%;
+  height: 100%;
+  background-color: #121213;
+  display: grid;
+  grid-template-rows: 1fr 4fr;
+  border-radius: 10px;
+}
+
+.main > .bottom > .section > .top {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  font-size: 2.2rem;
+}
+
+.main > .bottom > .section.left {
+  box-shadow: -3px 0px 10px rgba(207, 255, 177, 0.21603);
+}
+
+.main > .bottom > .section.right {
+  box-shadow: 3px 0px 10px rgba(207, 255, 177, 0.21603);
+}
+
+.main > .bottom > .section.right > .bottom {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-rows: 5fr 1fr;
+}
+
+.main > .bottom > .section.right > .bottom > .top {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.main > .bottom > .section.right > .bottom > .top > textarea {
+  width: 95%;
+  height: 75%;
+  background-color: #2a2a2c;
+  color: #ffffff;
+  font-size: large;
+  padding: 1em;
+  border: none;
+  overflow: auto;
+  outline: none;
+  resize: none;
+  border-radius: 10px;
+}
+
+.main > .bottom > .section.right > .bottom > .top > textarea:focus {
+  border: 4px solid rgb(255 255 255 / 0.2);
+}

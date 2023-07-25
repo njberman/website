@@ -57,6 +57,10 @@ body {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.game .right .button-bar .admin-button {
+  display: none;
+}
+
 .game .right .button-bar img {
   height: 50%;
   cursor: pointer;

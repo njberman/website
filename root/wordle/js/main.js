@@ -7,6 +7,8 @@ async function getFile(fileURL) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+  const showAdmin = getLocalStorageItem('admin', false) ? true : false;
+
   let allow = true;
   const gameEl = document.body.querySelector('.game');
   function showAlert(string, duration = 1000) {
@@ -37,9 +39,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.localStorage.setItem(item, JSON.stringify(value));
   }
 
-  function getLocalStorageItem(item) {
+  function getLocalStorageItem(item, reset = true) {
     const value = JSON.parse(window.localStorage.getItem(item));
-    if (!value) {
+    if (!value && reset) {
       updateLocalStorageItem(item, []);
       return getLocalStorageItem();
     } else return value;
@@ -193,15 +195,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   updateStats();
 
+  if (showAdmin) {
+    const adminWrapper = document.querySelector('.admin-button');
+    const [adminButton] = adminWrapper.children;
+    adminWrapper.style.display = 'block';
+    document.querySelector('.button-bar').style.gridTemplateColumns =
+      'repeat(4, 1fr)';
+    document.querySelector('.button-bar').style.width = '30%';
+
+    adminButton.addEventListener('click', () => {
+      // window.location.href = '/wordle/routes/admin/index.html?code=3141592653589'; // prod
+      window.location.href = '/routes/admin/index.html?code=3141592653589'; // dev
+    });
+  }
+
   // Get allowed words (prod)
-  const file = await getFile('/wordle/data/possible_words.txt');
-  const file2 = await getFile('/wordle/data/allowed_words.txt');
-  const file3 = await getFile('/wordle/data/possible_words_freq.txt');
+  // const file = await getFile('/wordle/data/possible_words.txt');
+  // const file2 = await getFile('/wordle/data/allowed_words.txt');
+  // const file3 = await getFile('/wordle/data/possible_words_freq.txt');
 
   // Get allowed words (dev)
-  // const file = await getFile('/data/possible_words.txt');
-  // const file2 = await getFile('/data/allowed_words.txt');
-  // const file3 = await getFile('/data/possible_words_freq.txt');
+  const file = await getFile('/data/possible_words.txt');
+  const file2 = await getFile('/data/allowed_words.txt');
+  const file3 = await getFile('/data/possible_words_freq.txt');
 
   const possibleWords = file.split('\n');
 
@@ -209,7 +225,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     .split('\n')
     .map((v) => Number(v.split(' ')[1]));
 
-  const allowedWords = file2.split('\n');
+  const allowedWords = file2.split('\n').join('').split('\r');
+  console.log(allowedWords);
 
   // Pick random word, based on word freq
   function getRandomWord() {
